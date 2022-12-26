@@ -97,7 +97,7 @@ def get_rows_from_lexer(tags_and_types):
     # elif second tag: it is the table name, append to tag stack
     # elif opening tag: if not already in column list include it, append to tag stack
     # elif value: append key-value pair of column name and value
-    # elif closing tag: check for error, if have finished a person the append list to end_output, pop from tag stack
+    # elif closing tag: check for non-match error, if have finished a person the append list to end_output, pop from tag stack
     for i,tat in enumerate(tags_and_types):
         if i==0:
             if tat[1]!="ot":
