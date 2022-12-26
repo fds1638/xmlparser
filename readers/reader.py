@@ -1,5 +1,6 @@
 import os
 
+# reader for xml files
 class Reader:
     def __init__(self, subdir="data/xml"):
         self.directory = os.getcwd() + "/" + subdir

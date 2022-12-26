@@ -1,6 +1,7 @@
 import sqlite3
 import os
 
+# write to sqlite3 database
 class DbWriter:
     def __init__(self, subdir="data/database"):
         self.directory = os.getcwd() + "/" + subdir

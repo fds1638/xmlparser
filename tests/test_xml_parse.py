@@ -6,6 +6,7 @@ from writers import database
 
 class TestXmlParse(unittest.TestCase):
     def test_xml_parse(self):
+        """Check if queries to table are as expected."""
         os.getcwd() + "/"
         con = sqlite3.connect(os.getcwd() + "/data/database/friends.db")
         cur = con.cursor()
