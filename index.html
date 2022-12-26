@@ -1,1 +1,90 @@
-<h1>Hello!</h1>
+<h1>XML Parser</h1>
+<p>
+This repo hosts an XML parser that I wil be working on. 
+XML can be arbitrarity complex, so it can provide a series of successively more difficult programming challenges.
+At this point the following XML can be parsed:
+  <textarea cols="35" rows="20" style="border:none;">
+    <?xml version="1.0" encoding="ISO-8859-1"?>
+    <friends>
+      <person>
+        <name>Alice</name>
+        <address>123 Main</address>
+        <birthmonth>October</birthmonth>
+        <industry>Consulting</industry>
+      </person>
+      <person>
+        <name>Bob</name>
+        <address>456 North</address>
+        <industry>Marketing</industry></person>
+    </friends>
+  </textarea>
+The <code>sqlite3<\code> output is a table called <i>person<\i> in a database called <i>friends<\i>:
+  <table>
+  <tr>
+    <th>name</th>
+    <th>address</th>
+    <th>birthmonth</th>
+    <th>industry</th>
+  </tr>
+  <tr>
+    <td>Alice</td>
+    <td>123 Main</td>
+    <td>October</td>
+    <td>Consulting</td>
+  </tr>
+  <tr>
+    <td>Bob</td>
+    <td>456 North</td>
+    <td></td>
+    <td>Marketing</industry></td>
+  </tr>
+</table>
+  The core of the parsing is done in this <a href="https://github.com/fds1638/xmlparser/blob/fd49e9dbdfdf28898138ebffbb676ac457634737/parser/xml_parse.py#L52">method</a>:
+  <code>
+    def get_rows_from_xml(s):
+    """ Given a valid xml string s, return the list of columns in the table to be created
+    and the values rows to be inserted in the table.
+    """
+    current_tag = ""
+    tag_stack = []
+    child_map = {}
+    i = 0
+    end_output = []
+    columns = set()
+    c2 = {}
+    cur_output = []
+    while i <len(s):
+        value = ""
+        while s[i]!='<':
+            value = value + s[i]
+            i += 1
+        if s[i+1]=='/':
+            tag, i = getClosingTag(s,i)
+            last_col = tag_stack.pop()
+            if len(value)>0:
+                cur_output.append({last_col: value})
+                columns.add(last_col)
+                if last_col not in c2.keys(): c2[last_col]=len(c2)
+            if len(tag_stack) == 1: 
+                end_output.append(cur_output)
+                cur_output = []
+        else:
+            tag, i = getOpeningTag(s, i)
+            if len(tag_stack)==0:
+                child_map[tag]=set()
+            else:
+                if tag_stack[-1] in child_map.keys():
+                    child_map[tag_stack[-1]].add(tag)
+                if not tag in child_map.keys():
+                    child_map[tag]=set()
+            tag_stack.append(tag)
+            if len(tag_stack)==1:
+                db_name = tag
+            if len(tag_stack)==2:
+                table_name = tag
+    
+    col_list = get_col_list(c2)
+    return db_name, table_name, col_list, end_output
+  <\code>
+The 
+</p>
