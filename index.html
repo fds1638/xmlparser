@@ -39,7 +39,7 @@ The <code>sqlite3</code> output is a table called <i>person</i> in a database ca
   </tr>
 </table>
   The core of the parsing is done in this <a href="https://github.com/fds1638/xmlparser/blob/fd49e9dbdfdf28898138ebffbb676ac457634737/parser/xml_parse.py#L52">method</a>:
-  <textarea>
+  <pre>
     def get_rows_from_xml(s):
     """ Given a valid xml string s, return the list of columns in the table to be created
     and the values rows to be inserted in the table.
@@ -84,6 +84,5 @@ The <code>sqlite3</code> output is a table called <i>person</i> in a database ca
     
     col_list = get_col_list(c2)
     return db_name, table_name, col_list, end_output
-  </textarea>
-The 
+  </pre>
 </p>
