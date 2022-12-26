@@ -38,51 +38,8 @@ The <code>sqlite3</code> output is a table called <i>person</i> in a database ca
     <td>Marketing</industry></td>
   </tr>
 </table>
-  The core of the parsing is done in this <a href="https://github.com/fds1638/xmlparser/blob/fd49e9dbdfdf28898138ebffbb676ac457634737/parser/xml_parse.py#L52">method</a>:
-  <pre>
-    def get_rows_from_xml(s):
-    """ Given a valid xml string s, return the list of columns in the table to be created
-    and the values rows to be inserted in the table.
-    """
-    current_tag = ""
-    tag_stack = []
-    child_map = {}
-    i = 0
-    end_output = []
-    columns = set()
-    c2 = {}
-    cur_output = []
-    while i <len(s):
-        value = ""
-        while s[i]!='<':
-            value = value + s[i]
-            i += 1
-        if s[i+1]=='/':
-            tag, i = getClosingTag(s,i)
-            last_col = tag_stack.pop()
-            if len(value)>0:
-                cur_output.append({last_col: value})
-                columns.add(last_col)
-                if last_col not in c2.keys(): c2[last_col]=len(c2)
-            if len(tag_stack) == 1: 
-                end_output.append(cur_output)
-                cur_output = []
-        else:
-            tag, i = getOpeningTag(s, i)
-            if len(tag_stack)==0:
-                child_map[tag]=set()
-            else:
-                if tag_stack[-1] in child_map.keys():
-                    child_map[tag_stack[-1]].add(tag)
-                if not tag in child_map.keys():
-                    child_map[tag]=set()
-            tag_stack.append(tag)
-            if len(tag_stack)==1:
-                db_name = tag
-            if len(tag_stack)==2:
-                table_name = tag
-    
-    col_list = get_col_list(c2)
-    return db_name, table_name, col_list, end_output
-  </pre>
+  The core of the parsing is done in <a href="https://github.com/fds1638/xmlparser/blob/fd49e9dbdfdf28898138ebffbb676ac457634737/parser/xml_parse.py#L52">this method</a>,
+while other modules handle <a href="https://github.com/fds1638/xmlparser/blob/main/readers/reader.py">reading from XML</a>, 
+<a href="https://github.com/fds1638/xmlparser/blob/main/writers/database.py">writing to the database</a>, 
+and <a href="https://github.com/fds1638/xmlparser/blob/main/tests/test_xml_parse.py">testing</a>.
 </p>
