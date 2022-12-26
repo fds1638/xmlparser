@@ -1,0 +1,48 @@
+<h1>Very Simple XML Parser</h1>
+<p>
+This repo hosts an XML parser that I will be working on. 
+XML can be arbitrarity complex, so it can provide a series of successively more difficult programming challenges.
+Hierarchical models (XML) to a relational models (tables) are different, so my goal will just be to do some special cases that will improve my skills.
+At this point the following XML can be parsed:<br>
+  <textarea rows="15"    cols="55">
+  
+    <friends>
+      <person>
+        <name>Alice</name>
+        <address>123 Main</address>
+        <birthmonth>October</birthmonth>
+        <industry>Consulting</industry>
+      </person>
+      <person>
+        <name>Bob</name>
+        <address>456 North</address>
+        <industry>Marketing</industry>
+      </person>
+    </friends>
+  </textarea>
+<br><br><br>The <code>sqlite3</code> output is a table called <i>person</i> in a database called <i>friends</i>:
+  <table>
+  <tr>
+    <th>name</th>
+    <th>address</th>
+    <th>birthmonth</th>
+    <th>industry</th>
+  </tr>
+  <tr>
+    <td>Alice</td>
+    <td>123 Main</td>
+    <td>October</td>
+    <td>Consulting</td>
+  </tr>
+  <tr>
+    <td>Bob</td>
+    <td>456 North</td>
+    <td></td>
+    <td>Marketing</industry></td>
+  </tr>
+</table>
+<br><br>The core of the parsing is done in <a href="https://github.com/fds1638/xmlparser/blob/fd49e9dbdfdf28898138ebffbb676ac457634737/parser/xml_parse.py#L52">this method</a>,
+while other modules handle <a href="https://github.com/fds1638/xmlparser/blob/main/readers/reader.py">reading from XML</a>, 
+<a href="https://github.com/fds1638/xmlparser/blob/main/writers/database.py">writing to the database</a>, 
+and <a href="https://github.com/fds1638/xmlparser/blob/main/tests/test_xml_parse.py">testing</a>.
+</p>
