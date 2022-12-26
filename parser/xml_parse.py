@@ -80,7 +80,7 @@ def xml_lexer(s):
             tags_and_types.append((value,"val"))
     return tags_and_types
 
-def get_rows_from_xml(tags_and_types):
+def get_rows_from_lexer(tags_and_types):
     """ Given a list of tags_and_types output by the xml_lexer, return:
     db_name: the first tag, the name of the database,
     table_name: the second tag, the name of the table,
@@ -133,6 +133,6 @@ def parse_xml_to_db(filename):
     f = r.get_xml_file(filename)
     xml_string = get_xml_from_file(f) 
     tags_and_types = xml_lexer(xml_string)
-    db_name, table_name, col_list, values_row_list = get_rows_from_xml(tags_and_types)
+    db_name, table_name, col_list, values_row_list = get_rows_from_lexer(tags_and_types)
     write_to_database(db_name, table_name, col_list, values_row_list)
     f.close()
