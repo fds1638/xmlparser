@@ -3,7 +3,8 @@
 This repo hosts an XML parser that I will be working on. 
 XML can be arbitrarity complex, so it can provide a series of successively more difficult programming challenges.
 Hierarchical models (XML) to a relational models (tables) are different, so my goal will just be to do some special cases that will improve my skills.
-At this point the following XML can be parsed:<br>
+<h3>Input:</h3>
+  At this point the following XML can be parsed:<br>
   <textarea rows="15"    cols="55">
   
     <friends>
@@ -20,6 +21,7 @@ At this point the following XML can be parsed:<br>
       </person>
     </friends>
   </textarea>
+<h3>Output:</h3>
 <br><br><br>The <code>sqlite3</code> output is a table called <i>person</i> in a database called <i>friends</i>:
   <table>
   <tr>
@@ -41,6 +43,7 @@ At this point the following XML can be parsed:<br>
     <td>Marketing</industry></td>
   </tr>
 </table>
+<h3>Method:</h3>
 <br><br>The core of the parsing is done in <a href="https://github.com/fds1638/xmlparser/blob/fd49e9dbdfdf28898138ebffbb676ac457634737/parser/xml_parse.py#L52">this method</a>,
 while other modules handle <a href="https://github.com/fds1638/xmlparser/blob/main/readers/reader.py">reading from XML</a>, 
 <a href="https://github.com/fds1638/xmlparser/blob/main/writers/database.py">writing to the database</a>, 
