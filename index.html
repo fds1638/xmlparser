@@ -62,7 +62,17 @@ The lexer (<a href="https://github.com/fds1638/xmlparser/blob/c1fbf2af3c8bd7bd78
 <h4>Parser</h4>
 <div>
 The parser (<a href="https://github.com/fds1638/xmlparser/blob/c1fbf2af3c8bd7bd7834dfab1b5268735033956d/parser/xml_parse.py#L83">code here</a>) 
-takes the output of the lexer as input and has the following logic:
+takes the output of the lexer as input and as output returns the database name, the table name, and two lists. The first list is a list of columns:
+  <textarea rows="3"    cols="155">
+    
+  ['name', 'address', 'birthmonth', 'industry']<br>
+</textarea>
+  <br>The second list is a list of key-value pairs to enter in the table:
+  <textarea rows="2"    cols="155">
+    
+  [[{'name': 'Alice'}, {'address': '123 Main'}, {'birthmonth': 'October'}, {'industry': 'Consulting'}], [{'name': 'Bob'}, {'address': '456 North'}, {'industry': 'Marketing'}]]
+</textarea>
+  <br>The parser has the following rules:
 </div>
 <div>
   <ul>
