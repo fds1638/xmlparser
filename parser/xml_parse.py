@@ -10,7 +10,7 @@ def getOpeningTag(s, i):
     while s[i]!='>':
         tag = tag + s[i]
         i += 1
-    return tag, i+1
+    return tag.strip(), i+1
 
 def getClosingTag(s, i):
     """ Get an xml closing tag: </tag>."""
@@ -20,7 +20,7 @@ def getClosingTag(s, i):
     while s[i]!='>':
         tag = tag + s[i]
         i += 1
-    return tag, i+1
+    return tag.strip(), i+1
 
 def getElementText(s, i):
     """ Get the text from an xml element: <tag>text</tag>."""
@@ -28,7 +28,7 @@ def getElementText(s, i):
     while s[i]!='<':
         val = val + s[i]
         i += 1
-    return val, i
+    return val.strip(), i
 
 def get_col_list(col_dict):
     """ Assume col_dict has keys of column names and values of column order.
