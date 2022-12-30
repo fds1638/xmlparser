@@ -98,25 +98,21 @@ The <code>sqlite3</code> output is a table called <i>person</i> in a database ca
 <h4>Lexer</h4>
 The lexer (<a href="https://github.com/fds1638/xmlparser/blob/c1fbf2af3c8bd7bd7834dfab1b5268735033956d/parser/xml_parse.py#L61">code here</a>) starts with string of XML like this:
   <textarea rows="4"    cols="155">
-    
 <friends><person><name>Alice</name><address>123 Main</address><birth><month>October</month><day>11</day></birth><industry>Consulting</industry></person><person><name>Bob</name><address>456 North</address><industry>Marketing</industry></person><person><name>Carol</name><address>789 South</address><birth><place><state>Texas</state><city>Houston</city></place></birth><industry>Advertising</industry></person></friends>
     </textarea>
 <br><br>The lexer outputs a list of tuples of tags and tag types. The three types are "ot" for an Opening Tag, "val" for Element Value, and "ct" for a Closing Tag:
-  <textarea rows="6"    cols="155">
-    
+  <textarea rows="7"    cols="155">
 [('friends', 'ot'), ('person', 'ot'), ('name', 'ot'), ('Alice', 'val'), ('name', 'ct'), ('address', 'ot'), ('123 Main', 'val'), ('address', 'ct'), ('birth', 'ot'), ('month', 'ot'), ('October', 'val'), ('month', 'ct'), ('day', 'ot'), ('11', 'val'), ('day', 'ct'), ('birth', 'ct'), ('industry', 'ot'), ('Consulting', 'val'), ('industry', 'ct'), ('person', 'ct'), ('person', 'ot'), ('name', 'ot'), ('Bob', 'val'), ('name', 'ct'), ('address', 'ot'), ('456 North', 'val'), ('address', 'ct'), ('industry', 'ot'), ('Marketing', 'val'), ('industry', 'ct'), ('person', 'ct'), ('person', 'ot'), ('name', 'ot'), ('Carol', 'val'), ('name', 'ct'), ('address', 'ot'), ('789 South', 'val'), ('address', 'ct'), ('birth', 'ot'), ('place', 'ot'), ('state', 'ot'), ('Texas', 'val'), ('state', 'ct'), ('city', 'ot'), ('Houston', 'val'), ('city', 'ct'), ('place', 'ct'), ('birth', 'ct'), ('industry', 'ot'), ('Advertising', 'val'), ('industry', 'ct'), ('person', 'ct'), ('friends', 'ct')]
 </textarea>
 <h4>Parser</h4>
 <div>
 The parser (<a href="https://github.com/fds1638/xmlparser/blob/c1fbf2af3c8bd7bd7834dfab1b5268735033956d/parser/xml_parse.py#L83">code here</a>) 
 takes the output of the lexer as input and as output returns the database name, the table name, and two lists. The first list is a list of columns:
-  <textarea rows="3"    cols="155">
-    
+  <textarea rows="1"    cols="155">
   ['name', 'address', 'birth_month', 'birth_day', 'industry', 'birth_place_state', 'birth_place_city']
 </textarea>
   <br><br>The second list is a list of key-value pairs to enter in the table:
-  <textarea rows="4"    cols="155">
-    
+  <textarea rows="3"    cols="155">
   [[{'name': 'Alice'}, {'address': '123 Main'}, {'birth_month': 'October'}, {'birth_day': '11'}, {'industry': 'Consulting'}], [{'name': 'Bob'}, {'address': '456 North'}, {'industry': 'Marketing'}], [{'name': 'Carol'}, {'address': '789 South'}, {'birth_place_state': 'Texas'}, {'birth_place_city': 'Houston'}, {'industry': 'Advertising'}]]
 </textarea>
   <br><br>The parser has the following rules:
