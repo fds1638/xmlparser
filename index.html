@@ -113,9 +113,13 @@ takes the output of the lexer as input and as output returns the database name, 
   <textarea rows="1"    cols="155">
   ['name', 'address', 'birth_month', 'birth_day', 'industry', 'birth_place_state', 'birth_place_city']
 </textarea>
-  <br><br>The second list is a list of key-value pairs to enter in the table:
-  <textarea rows="3"    cols="155">
-  [[{'name': 'Alice'}, {'address': '123 Main'}, {'birth_month': 'October'}, {'birth_day': '11'}, {'industry': 'Consulting'}], [{'name': 'Bob'}, {'address': '456 North'}, {'industry': 'Marketing'}], [{'name': 'Carol'}, {'address': '789 South'}, {'birth_place_state': 'Texas'}, {'birth_place_city': 'Houston'}, {'industry': 'Advertising'}]]
+  <br><br>The second is a list of lists of key-value pairs to enter in the table:
+  <textarea rows="5"    cols="155">
+  [
+    [{'name': 'Alice'}, {'address': '123 Main'}, {'birth_month': 'October'}, {'birth_day': '11'}, {'industry': 'Consulting'}], 
+    [{'name': 'Bob'}, {'address': '456 North'}, {'industry': 'Marketing'}], 
+    [{'name': 'Carol'}, {'address': '789 South'}, {'birth_place_state': 'Texas'}, {'birth_place_city': 'Houston'}, {'industry': 'Advertising'}]
+  ]
 </textarea>
   <br><br>The parser has the following rules:
 </div>
