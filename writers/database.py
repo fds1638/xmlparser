@@ -15,7 +15,7 @@ class DbWriter:
         cur = con.cursor()
         return con, cur
 
-    def create_table(self, cur, tablename, columns, len_common_prefix):
+    def create_table(self, cur, tablename, columns):
         """ Create table with cursor cur with the given table name and columns."""
         query = "CREATE TABLE " + tablename + "(" 
         allcols = ""
@@ -27,7 +27,7 @@ class DbWriter:
         query += allcols + ")"
         cur.execute(query)
 
-    def insert_row(self, con, cur, table, value_dict_list, len_common_prefix):
+    def insert_row(self, con, cur, table, value_dict_list):
         """ Insert one row of values into a given table.
         Assumes all columns exist in the table.
         Assume value_dict_list is list of key-value pairs,

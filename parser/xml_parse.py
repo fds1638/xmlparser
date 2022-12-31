@@ -40,25 +40,14 @@ def get_col_list(col_dict):
     col_list = ["" for i in range(len(col_dict))]
     for k, v in col_dict.items():
         col_list[v]=k
-    # get common prefix
-    for i, c in enumerate(col_list):
-        if i==0: 
-            common_prefix = col_list[i]
-        else:
-            j=0
-            while j<len(common_prefix) and j<len(col_list[i]) and common_prefix[j]==col_list[i][j]: 
-                j+=1
-            common_prefix = common_prefix[:j]
-    for i in range(len(col_list)):
-        col_list[i]=col_list[i][len(common_prefix):]
-    return col_list, len(common_prefix)
+    return col_list
 
-def write_to_database(filename, tablename, col_list, values_row_list, len_common_prefix):
+def write_to_database(filename, tablename, col_list, values_row_list):
     db = database.DbWriter()
     con, cur = db.get_conn_to_new_db(filename)
-    db.create_table(cur,tablename,col_list, len_common_prefix)
+    db.create_table(cur,tablename,col_list)
     for value_row in values_row_list:
-        db.insert_row(con,cur,tablename,value_row, len_common_prefix)
+        db.insert_row(con,cur,tablename,value_row)
 
 def get_xml_from_file(f):
     """ Given a file f, return the xml in a string s."""
@@ -116,8 +105,6 @@ def get_rows_from_lexer(tags_and_types):
     #    if it matches the table_name, it's the end of a row, so process the row
     #    One: the next tag is a val, in which case put the prefix in the column list
     #    Two: the next tag is not a val, in 
-    # At the end, some processing of the column names and values in order to remove excess
-    # prefixes from the column names and return nice lists for creating database CREATE and INSERT queries.
     i=0
     prefix = ""
     row_tag = "person"
@@ -126,7 +113,8 @@ def get_rows_from_lexer(tags_and_types):
         if tags_and_types[i][1]=="ot":
             if i==0: db_name = tat[0]
             elif i==1: table_name = tat[0]
-            prefix = prefix + "_" + tags_and_types[i][0]
+            elif tags_and_types[i][0]!=db_name and tags_and_types[i][0]!=table_name: 
+                prefix = tags_and_types[i][0] if prefix=="" else prefix + "_" + tags_and_types[i][0]
             if tags_and_types[i+1][1]=="val":
                 if prefix not in c2.keys():
                     c2[prefix] = len(c2)
@@ -139,25 +127,21 @@ def get_rows_from_lexer(tags_and_types):
                 end_output.append(cur_output)
                 cur_output=[]
         i += 1
-       
-    col_list, len_common_prefix = get_col_list(c2)
-    end_output_2 = []
-    for person_list in end_output:
-        new_person_list = []
-        for entry_dict in person_list:
-            for key, value in entry_dict.items():
-                new_person_list.append({key[len_common_prefix:]:value})
-        end_output_2.append(new_person_list)
-    return db_name, table_name, col_list, end_output_2, len_common_prefix
+    col_list = get_col_list(c2)
+    return db_name, table_name, col_list, end_output
  
 def parse_xml_to_db(filename):
     r = reader.Reader()
     f = r.get_xml_file(filename)
     xml_string = get_xml_from_file(f) 
     tags_and_types = xml_lexer(xml_string)
-    db_name, table_name, col_list, values_row_list, len_common_prefix = get_rows_from_lexer(tags_and_types)
-    write_to_database(db_name, table_name, col_list, values_row_list, len_common_prefix)
+    db_name, table_name, col_list, values_row_list = get_rows_from_lexer(tags_and_types)
+    write_to_database(db_name, table_name, col_list, values_row_list)
     f.close()
 
-
+    print("//////")
+    print(tags_and_types)
+    print(col_list)
+    print(values_row_list)
+    print("//////")
 
