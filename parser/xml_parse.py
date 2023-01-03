@@ -139,9 +139,3 @@ def parse_xml_to_db(filename):
     write_to_database(db_name, table_name, col_list, values_row_list)
     f.close()
 
-    print("//////")
-    print(tags_and_types)
-    print(col_list)
-    print(values_row_list)
-    print("//////")
-
